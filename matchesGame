@@ -1,0 +1,156 @@
+let matchesStack = 50; // Initial number of matches
+let currentPlayerIndex = 0; // Track the current player's turn
+let players = []; // Store player names
+
+function createPlayerInputs(numOfPlayers) {
+  const playerNamesContainer = document.getElementById("playerNamesContainer");
+  playerNamesContainer.innerHTML = ""; // Clear previous inputs
+  playerNamesContainer.style.display = "block"; // Show player names container
+
+  // Create input fields for each player
+  for (let i = 0; i < numOfPlayers; i++) {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = `Player ${i + 1} name`;
+    input.className = "inputPlayerNames";
+    input.id = `playerName${i}`;
+    playerNamesContainer.appendChild(input);
+  }
+
+  const startGameButton = document.createElement("button");
+  startGameButton.textContent = "Start Game";
+  startGameButton.id = "startGameButton";
+  startGameButton.addEventListener("click", function () {
+    startGame();
+  });
+  playerNamesContainer.appendChild(startGameButton);
+}
+
+function startGame() {
+  const playerInputs = document.getElementsByClassName("inputPlayerNames");
+  players = []; // Clear previous player names
+
+  // Collect player names
+  for (let playerInput of playerInputs) {
+    const playerName = playerInput.value.trim();
+    if (playerName) {
+      players.push(playerName); // Add player names to the array
+    }
+  }
+
+  // Check if we have at least 2 players
+  if (players.length < 2) {
+    document.getElementById("message").textContent =
+      "You must enter at least 2 player names.";
+    return; // Exit the function to prevent starting the game
+  }
+
+  // Hide player input fields and the before game container
+  document.getElementById("beforeGameContainer").style.display = "none";
+  document.getElementById("playerNamesContainer").style.display = "none";
+
+  // Show matches left container
+  document.getElementById("matchesLeftContainer").style.display = "block";
+  displayMatchInput(); // Start the game
+}
+
+function gameWon(matches) {
+  return matches === 0; // Check if matches are zero
+}
+
+function endGame() {
+  const startAgainButton = document.getElementById("startAgainButton");
+  startAgainButton.style.display = "block"; // Show the start again button
+
+  // Disable the remove matches button
+  document.getElementById("removeMatchesButton").disabled = true; // Disable button when game ends
+
+  startAgainButton.onclick = function () {
+    resetGame(); // Reset the game when clicked
+  };
+}
+
+function resetGame() {
+  // Reset variables
+  matchesStack = 50; // Reset matches
+  currentPlayerIndex = 0; // Reset current player index
+  players = []; // Clear player names
+
+  // Clear message and hide buttons
+  document.getElementById("message").textContent = "";
+  document.getElementById("startAgainButton").style.display = "none"; // Hide the start again button
+  document.getElementById("matchesLeftContainer").style.display = "none"; // Hide the matches left container
+  document.getElementById("playerNamesContainer").innerHTML = ""; // Clear previous player name inputs
+
+  // Show the player input container and reset its content
+  document.getElementById("beforeGameContainer").style.display = "block"; // Show the player input container
+  document.getElementById("numOfPlayers").value = "2"; // Reset number of players input
+  document.getElementById("matchesMessage").textContent = ""; // Reset the matches message
+
+  // Re-enable the remove matches button for the new game
+  document.getElementById("removeMatchesButton").disabled = false; // Re-enable button for new game
+}
+
+function displayMatchInput() {
+  const messageDiv = document.getElementById("message");
+  const player = players[currentPlayerIndex];
+
+  // Display current player turn and matches left
+  messageDiv.textContent = `${player}'s turn.`;
+  document.getElementById(
+    "matchesMessage"
+  ).textContent = `${matchesStack} matches left.`;
+
+  // Set up input and button for removing matches
+  const removeMatchesButton = document.getElementById("removeMatchesButton");
+  const numOfMatchesRetrievedInput =
+    document.getElementById("numMatchesToRemove");
+
+  removeMatchesButton.onclick = function () {
+    const matchesToRemove = parseInt(numOfMatchesRetrievedInput.value, 10);
+    if (
+      !isNaN(matchesToRemove) &&
+      matchesToRemove >= 1 &&
+      matchesToRemove <= 6
+    ) {
+      if (matchesToRemove <= matchesStack) {
+        matchesStack -= matchesToRemove;
+        messageDiv.textContent = `${player} removed ${matchesToRemove} matches.`;
+        document.getElementById(
+          "matchesMessage"
+        ).textContent = `${matchesStack} matches left.`; // Update matches left
+
+        // Check if the game is won
+        if (gameWon(matchesStack)) {
+          messageDiv.textContent = `${player} wins!`;
+          endGame(); // End the game
+        } else {
+          // Clear the input and update the display
+          numOfMatchesRetrievedInput.value = "1"; // Reset to default value
+          currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+          displayMatchInput(); // Ask the next player
+        }
+      } else {
+        messageDiv.textContent = `Not enough matches left. Remove ${matchesStack} matches or less.`;
+      }
+    } else {
+      messageDiv.textContent = "Please enter a number between 1 and 6.";
+    }
+  };
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const submitPlayersButton = document.getElementById("submitPlayersButton");
+  submitPlayersButton.addEventListener("click", function () {
+    const numOfPlayers = parseInt(
+      document.getElementById("numOfPlayers").value,
+      10
+    );
+    if (numOfPlayers >= 2) {
+      createPlayerInputs(numOfPlayers);
+    } else {
+      document.getElementById("message").textContent =
+        "Number of players must be at least 2.";
+    }
+  });
+});

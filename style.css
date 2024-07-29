@@ -1,0 +1,122 @@
+/* General Body Styles */
+body {
+  height: 100vh;
+  font-size: 25px;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Center items vertically */
+}
+
+/* Wrapper for Matches */
+.wrapper {
+  display: flex;
+  justify-content: center; /* Center the match elements */
+  width: 100%; /* Take full width */
+}
+
+/* Match Styles */
+.matchBody,
+.matchBody2 {
+  height: 60px;
+  width: 80%;
+  background-color: #ffa763; /* Primary color */
+  border-radius: 12px; /* Adjusted border-radius */
+}
+
+.matchHead,
+.matchHead2 {
+  height: 60px;
+  width: 10%;
+  background-color: #a61919; /* Secondary color */
+  border-radius: 20px; /* Adjusted border-radius */
+}
+
+/* Match Head specific adjustments */
+.matchHead {
+  border-top-left-radius: 3px; /* Adjust for specific corners */
+  border-bottom-left-radius: 3px;
+}
+
+.matchHead2 {
+  border-top-right-radius: 3px; /* Adjust for specific corners */
+  border-bottom-right-radius: 3px;
+}
+
+.matchBody2 {
+  border-top-left-radius: 3px; /* Adjust for specific corners */
+  border-bottom-left-radius: 3px;
+}
+
+.matchBody {
+  border-top-right-radius: 3px; /* Adjust for specific corners */
+  border-bottom-right-radius: 3px;
+}
+
+/* Game Section */
+#game {
+  height: 60vh;
+  width: 150vh;
+  margin: 20px auto; /* Center horizontally */
+}
+
+/* Container for player input */
+.game {
+  margin: 20px auto;
+  padding: 20px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Fields */
+input[type="number"],
+input[type="text"] {
+    font-size: 25px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 20vh;
+  box-sizing: border-box;
+}
+
+/* Labels */
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Buttons */
+button {
+    font-size: 25px;
+  background-color: #007bff; /* Button color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+button:hover {
+  background-color: #0056b3; /* Button hover color */
+}
+
+/* Message Box */
+.message {
+  color: #333;
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Hidden elements */
+.hidden {
+  display: none;
+}

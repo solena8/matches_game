@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Allumettes Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="matchBody"></div>
+      <div class="matchHead"></div>
+    </div>
+    <div id="game">
+      <div id="message" class="message"></div>
+
+      <div id="beforeGameContainer" class= "container" >
+        <label for="numOfPlayers">Enter number of players (at least 2):</label>
+        <input type="number" id="numOfPlayers" min="2" value="2" />
+        <button id="submitPlayersButton">Submit Players</button>
+      </div>
+
+      <div id="playerNamesContainer" class= "container" style="display: none"></div>
+
+      <div id="matchesLeftContainer"  class= "container" style="display: none">
+        <div id="matchesMessage"></div>
+        <input
+          type="number"
+          id="numMatchesToRemove"
+          min="1"
+          max="6"
+          value="1"
+        />
+        <button id="removeMatchesButton">Remove Matches</button>
+        <button id="startAgainButton" style="display: none">Start Again</button>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="matchHead2"></div>
+      <div class="matchBody2"></div>
+    </div>
+
+    <script src="Allumettes.js"></script>
+  </body>
+</html>
